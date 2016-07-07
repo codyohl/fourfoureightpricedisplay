@@ -1,11 +1,10 @@
+// Pin numbers (These numbers are on the Audrino board)
 #define CLOCK_1 7
 #define CLOCK_2 12
 #define DATA_1 8
 #define DATA_2 13
 
 void setup() {
-  // put your setup code here, to run once:
-
   pinMode(CLOCK_1, OUTPUT);
   pinMode(CLOCK_2, OUTPUT);
   pinMode(DATA_1, OUTPUT);
