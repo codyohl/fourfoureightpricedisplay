@@ -2,6 +2,8 @@
 
 ## Overview
 Basically, we have got a display board named 448 price display. We are just given the board, without any documentation. Searching online doesn't give us much information either. So we decided to reverse engineer it. The reverse engineering process took about one and a half hour, but it was fun. This project is the result of the hacking.
+- The price display driver is the arduino sketch that drives the 448 price display.
+- The price display service is the web app (.NET Core) that can talk to the driver and display a price!
 
 ## Parts
 There are a sequence of display boards. Each display board has two chips. One of the chip is named `M5480B7`, it is a LED display driver. Another chip is named `CD4013BCN`, which is a pair of D flip flops. We can easily google the data sheet of the chips online as follow:
