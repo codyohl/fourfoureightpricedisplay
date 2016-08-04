@@ -9,7 +9,7 @@ void setup() {
   pinMode(CLOCK_2, OUTPUT);
   pinMode(DATA_1, OUTPUT);
   pinMode(DATA_2, OUTPUT);
-  // Serial.begin(9600);
+  Serial.begin(9600);
 }
 
 int current_row = 1;
@@ -89,6 +89,27 @@ void showNumber(int row, int numberToDisplay)
 // This is a simple odometer that loop through all the numbers
 // We can do something more interesting if wished
 void loop()
+{
+  byte b;
+  while(Serial.available() <= 0) { }
+  if (b = Serial.read() != 255)
+    return;
+
+  while (Serial.available() < 3) { }
+  //byte contents[3] = { Serial.read(), Serial.read(), Serial.read() };
+
+  byte row  = Serial.read();
+  unsigned int val = Serial.read();
+  val = val << 8;
+  val += Serial.read();
+  
+//  Serial.print(row);
+//  Serial.print(",");
+//  Serial.println(val);
+  showNumber(row, val);
+}
+
+void loop_all_numbers()
 {
   showNumber(current_row, current_numberToDisplay);
   current_numberToDisplay += 1;

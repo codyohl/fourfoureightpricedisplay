@@ -47,6 +47,8 @@ namespace PriceDisplayForwarder
 
         public static void SetRow(int r, int val)
         {
+            Console.WriteLine($"Row:{r}, Val:{val}");
+
             // Writes contents to serial.
             for (int i = 0; i < 2; i++)
             {
@@ -55,12 +57,13 @@ namespace PriceDisplayForwarder
                 byte high = (byte)(val / 256);
                 byte low = (byte)(val % 256);
                 byte row = Convert.ToByte(r);
-                byte[] buffer = new byte[] { high, low, row };
-                port.Write(buffer, 0, 3);
-                port.Close();
+                byte[] buffer = new byte[] { 255, row, high, low };
+                port.Write(buffer, 0, buffer.Length);
+
+                //Console.WriteLine(port.ReadChar() + "" + port.ReadChar() + "" + port.ReadChar() + "" + port.ReadChar() + "" + port.ReadChar() );
+                    port.Close();
             }
 
-            Console.WriteLine($"Row:{r}, Val:{val}");
 
 
         }

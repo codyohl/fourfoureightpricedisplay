@@ -1,51 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Pipes;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.RegularExpressions;
-using System.IO.Pipes;
-using System.IO;
-using System.Text;
-using System.Diagnostics;
 
-namespace PriceDisplayWebApp.Controllers
+// For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace WebApplication3.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
-
+        // GET: api/values
         [HttpGet]
-        public string Get()
+        public IEnumerable<string> Get()
         {
-            return "get";
+            return new string[] { "value1", "value2" };
         }
 
-        // GET api/values/<number>
+        // GET api/values/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            try
+            return "value";
+        }
+
+        public class Pair
             {
-                ParseAndSend($"1," + id.ToString());
-                return "Success.";
-            }
-            catch (Exception e)
-            {
-                return e.Message;
-            }
+            public int Row { get; set; }
+            public int Val { get; set; }
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string pair)
+        public void Post([FromBody]Pair value)
         {
             try
             {
-                ParseAndSend(pair);
+                Send(value.Row, value.Val);
             }
             catch
             {
+                
             }
         }
 
@@ -60,23 +59,13 @@ namespace PriceDisplayWebApp.Controllers
         public void Delete(int id)
         {
         }
-
-        private void ParseAndSend(string pair)
-        {
-            Match m = (new Regex(@"(\d+),(\d+)")).Match(pair);
-            if (m.Success)
-            {
-                Send(int.Parse(m.Groups[1].Value), int.Parse(m.Groups[2].Value));
-            }
-        }
-
         public void Send(int r, int val)
         {
             // Sends to the price display forwarder by writing to the pipe.
 
             NamedPipeClientStream pipeClient = new NamedPipeClientStream(".", "testpipe", PipeDirection.Out);
             pipeClient.Connect();
-            
+
             WriteString($"{r},{val}", pipeClient);
         }
 
