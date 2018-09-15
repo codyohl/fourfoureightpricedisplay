@@ -17,5 +17,13 @@ The D Flip Flop chip [data sheet](https://www.fairchildsemi.com/datasheets/CD/CD
 ## Connections
 The board itself has six inputs. Two inputs pins are simply power and ground. The another two are two pairs of data and clock. The first data and clock drives the LED display driver, the second data and clock drive the selection of board.
 
+| 448 Display   | Audrino       | 
+| :-----------: |:-------------:| 
+| 1             | 7 (CLOCK_1)   | 
+| 2             | 8 (DATA_1)    | 
+| 3             | GND           | 
+| 4             | 5V            | 
+| 5             | 12 (CLOCK_2)  | 
+| 6             | 13 (DATA_2)   | 
 
-
+* The 448 Display port numbers are numbered from left to right (when the board is placed with the ports pointing upwards)
